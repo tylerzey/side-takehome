@@ -1,4 +1,4 @@
-import { afterEach, vi, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test } from 'vitest';
 import { graphQLSDK } from './lib/graphqlSDK';
 import { users } from './lib/users';
 import { listings } from './lib/listings';
