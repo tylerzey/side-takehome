@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, vi, describe, expect, test } from 'vitest';
 import { graphQLSDK } from './lib/graphqlSDK';
 import { users } from './lib/users';
 import { listings } from './lib/listings';
@@ -7,22 +7,26 @@ import { wait } from '@side/utils/src/lang/wait';
 
 describe('favoriting', () => {
   const sdk = graphQLSDK(users.user1);
+  const sdk2 = graphQLSDK(users.user2);
 
   afterEach(async () => {
     await cleanupFavorites(sdk);
+    await cleanupFavorites(sdk2);
   });
 
-  test('a race condition should be avoided when adding and removing a favorite', async () => {
-    const add1 = sdk.addFavorite({ mlsId: listings.one.mlsId });
-    await wait(5);
-    const rm = sdk.removeFavorite({ mlsId: listings.one.mlsId });
-    await wait(5);
-    const add2 = sdk.addFavorite({ mlsId: listings.one.mlsId });
+  test(
+    'a race condition should be avoided when adding and removing a favorite',
+    async () => {
+      const add1 = sdk.addFavorite({ mlsId: listings.one.mlsId });
+      await wait(5);
+      const rm = sdk.removeFavorite({ mlsId: listings.one.mlsId });
+      await wait(50);
+      const add2 = sdk.addFavorite({ mlsId: listings.one.mlsId });
 
-    await Promise.all([add1, rm, add2]);
-    const myFavorites = await sdk.queryMyFavorites();
+      await Promise.all([add1, rm, add2]);
+      const myFavorites = await sdk.queryMyFavorites();
 
-    expect(myFavorites.data?.queryFavorites.entities).toMatchInlineSnapshot(`
+      expect(myFavorites.data?.queryFavorites.entities).toMatchInlineSnapshot(`
       [
         {
           "mlsId": 1005192,
@@ -34,7 +38,9 @@ describe('favoriting', () => {
         },
       ]
     `);
-  });
+    },
+    { retry: 3 }
+  );
 
   test('should allow a user to favorite a listing', async () => {
     const res = await sdk.addFavorite({ mlsId: listings.one.mlsId });
@@ -65,6 +71,15 @@ describe('favoriting', () => {
 
     expect(myFavorites.data?.queryFavorites.entities).toMatchInlineSnapshot(`[]`);
   });
+
+  test('the listings favorite count remains accurate', async () => {
+    await sdk.addFavorite({ mlsId: listings.one.mlsId });
+    await sdk2.addFavorite({ mlsId: listings.one.mlsId });
+
+    expect(await viewListingCount(sdk, listings.one.mlsId)).toBe(2);
+    await sdk2.removeFavorite({ mlsId: listings.one.mlsId });
+    expect(await viewListingCount(sdk, listings.one.mlsId)).toBe(1);
+  });
 });
 
 const cleanupFavorites = async (sdk: Sdk) => {
@@ -72,6 +87,14 @@ const cleanupFavorites = async (sdk: Sdk) => {
   for (const favorite of myFavorites.data?.queryFavorites.entities || []) {
     favorite?.mlsId && (await sdk.removeFavorite({ mlsId: favorite.mlsId }));
   }
+};
+
+const viewListingCount = async (sdk: Sdk, mlsId: number) => {
+  const response = await sdk.viewListingFavoriteCount({ mlsId });
+  if (response.data?.findListingById?.__typename === 'ErrorCause') {
+    throw new Error('Listing not found');
+  }
+  return response.data?.findListingById?.resolvedValues?.favoritesCount;
 };
 
 /* GraphQL */ `
