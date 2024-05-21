@@ -1,0 +1,71 @@
+name: Check & Test
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+
+env:
+  STAGE: dev
+  VITE_PUBLIC_STAGE: dev
+  MONGO_URI: mongodb://127.0.0.1:27017/properties
+  SIMPLYRETS_API_URL: https://api.simplyrets.com
+  SIMPLYRETS_API_USERNAME: simplyrets
+  SIMPLYRETS_API_PASSWORD: simplyrets
+  PORT: 4000
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🍬 Config node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: 📥 Download deps
+        run: yarn --frozen-lockfile --silent
+
+      - name: 🧬 Codegen
+        run: yarn codegen
+
+      - name: 🧪 TypeCheck Code
+        run: yarn type-check
+
+      - name: 🧹 Lint Code
+        run: yarn lint
+
+      - name: 📜 Check for Security Vulnerabilities
+        run: yarn security-check
+
+      - name: 🧳 Check Build
+        run: yarn Build
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🍬 Config node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: 📥 Download deps
+        run: yarn --frozen-lockfile --silent
+
+      - name: 🧬 Codegen
+        run: yarn codegen
+
+      - name: 🧪 Test Code
+        run: yarn test

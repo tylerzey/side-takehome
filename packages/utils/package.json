@@ -1,0 +1,25 @@
+{
+  "name": "@side/utils",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint ./src --fix $@",
+    "test": "vitest",
+    "type-check": "tsc -b ./ --force"
+  },
+  "dependencies": {
+    "email-addresses": "5.0.0",
+    "short-uuid": "4.2.2"
+  },
+  "devDependencies": {
+    "@side/scripts": "*",
+    "@side/types": "*"
+  }
+}

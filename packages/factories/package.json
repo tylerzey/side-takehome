@@ -1,0 +1,20 @@
+{
+  "name": "@side/factories",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "source": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint ./src --fix $@",
+    "type-check": "tsc -b ./ --force"
+  },
+  "dependencies": {
+    "@side/utils": "*"
+  },
+  "devDependencies": {
+    "@side/scripts": "*",
+    "factory.ts": "1.4.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@side/types",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "type-check": "tsc -b ./ --force"
+  },
+  "devDependencies": {
+    "@side/scripts": "*"
+  }
+}

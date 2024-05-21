@@ -1,0 +1,10 @@
+{
+  "extends": "@side/tsconfig/node.json",
+  "compilerOptions": {
+    "sourceRoot": "/apps/e2d-api/src/",
+    "baseUrl": "./",
+    "strictNullChecks": true,
+    "outDir": "./dist"
+  },
+  "include": ["codegen.ts", "src/**/*", "vite.config.ts"]
+}

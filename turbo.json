@@ -1,0 +1,19 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "deploy": {
+      "dependsOn": ["^deploy"],
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "build-schema": {},
+    "codegen": {
+      "dependsOn": ["@side/api#build-schema"]
+    },
+    "lint": {},
+    "test": {},
+    "type-check": {}
+  }
+}

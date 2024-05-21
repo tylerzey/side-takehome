@@ -1,0 +1,10 @@
+{
+  "extends": "@side/tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "sourceRoot": "/packages/factories/src/"
+  },
+  "include": ["src"]
+}

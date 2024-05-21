@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "module": "commonjs",
+    "lib": ["es2020", "webworker"],
+    "target": "es2019",
+    "paths": {
+      "@side/*": ["./*/src"]
+    },
+    "composite": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "noImplicitThis": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "resolveJsonModule": true,
+    "useUnknownInCatchVariables": true,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": true
+  },
+  "exclude": ["node_modules"]
+}

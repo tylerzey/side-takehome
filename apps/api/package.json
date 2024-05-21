@@ -1,0 +1,41 @@
+{
+  "name": "@side/api",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "scripts": {
+    "build": "esbuild --bundle --platform=node --target=node20 --outdir=dist --format=cjs src/handlers/graphql.ts",
+    "build-schema": "ts-node --transpileOnly ./scripts/writeSchema.ts",
+    "codegen": "yarn build-schema && graphql-codegen --config ./codegen.ts",
+    "lint": "eslint ./src --ignore-pattern \"**/generated/\"  --fix $@",
+    "start:database": "node ./scripts/database.js",
+    "start:server": "bash ./scripts/server.sh",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@graphql-tools/utils": "10.0.12",
+    "@side/auth": "*",
+    "@side/utils": "*",
+    "apollo-server": "^3.13.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-basic-auth": "^1.2.1",
+    "graphql-middleware": "6.1.35",
+    "graphql-operation-statistics": "1.2.2",
+    "graphql-scalars": "1.22.4",
+    "mongodb-memory-server": "^9.2.0",
+    "mongoose": "^8.4.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@graphql-typed-document-node/core": "3.2.0",
+    "@side/factories": "*",
+    "@side/scripts": "*",
+    "@side/types": "*",
+    "tsconfig-paths": "4.2.0"
+  }
+}

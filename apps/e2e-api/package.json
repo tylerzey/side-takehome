@@ -1,0 +1,13 @@
+{
+  "name": "@side/e2e-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "codegen": "graphql-codegen",
+    "lint": "eslint ./src --ignore-pattern \"**/generated/\"  --fix $@",
+    "test:e2e": "bash ./scripts/test.sh",
+    "type-check": "tsc -b ./ --force"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

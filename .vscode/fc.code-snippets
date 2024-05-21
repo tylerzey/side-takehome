@@ -1,0 +1,29 @@
+{
+  "Utility Function": {
+    "prefix": "fn",
+    "body": [
+      "export const ${TM_FILENAME_BASE} = () => {",
+      "  //",
+      "};",
+      ""
+    ],
+    "description": "Creates a new utility fn or react hook"
+  },
+  "Unit test": {
+    "prefix": "unit",
+    "body": [
+      "import { describe, expect, test } from 'vitest';",
+      "",
+      "import { $1 } from './$1';",
+      "",
+      "describe('$1',()=>{",
+      "  test('default case', ()=>{",
+      "     const result = $1",
+      "",
+      "     expect(result).toEqual({});",
+      "  })",
+      "});"
+    ],
+    "description": "Creates a memoized react functional component"
+  },
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@side/auth",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint ./src --fix $@",
+    "test": "vitest",
+    "type-check": "tsc -b ./ --force"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@side/factories": "*",
+    "@side/scripts": "*",
+    "@side/types": "*",
+    "@side/utils": "*"
+  }
+}

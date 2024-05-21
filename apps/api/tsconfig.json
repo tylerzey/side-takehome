@@ -1,0 +1,17 @@
+{
+  "extends": "../../packages/tsconfig/node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "./",
+    "resolveJsonModule": true,
+    "sourceRoot": "/apps/api/src/",
+    "jsx": "preserve",
+    "paths": {
+      "@api/*": ["./src/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["src", "codegen.ts", "vite.config.ts", "scripts/writeSchema.ts"]
+}
