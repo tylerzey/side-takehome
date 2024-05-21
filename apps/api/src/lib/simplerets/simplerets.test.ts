@@ -33,8 +33,7 @@ describe('SimplyRETSClient', () => {
 
       const result = await client.queryProperties(fromPartial(params));
 
-      expect(axios.get).toHaveBeenCalledWith(`${client.apiUrl}/properties`, {
-        params,
+      expect(axios.get).toHaveBeenCalledWith(`${client.apiUrl}/properties?cities=New%20York`, {
         auth: { username: client.username, password: client.password },
       });
       expect(result).toEqual(response.data);
