@@ -11,7 +11,7 @@ export interface IAPIDataLoaders {
   findListingById: DataLoader<number, Listing | null>;
   queryFavoritesByUserEmail: DataLoader<string, FavoriteDB[]>;
   findFavoriteById: DataLoader<string, FavoriteDB | null>;
-  queryListings: DataLoader<{ city: null | string | undefined }, Listing[]>;
+  queryListings: DataLoader<{ cities: null | string[] | undefined }, Listing[]>;
   countFavoritesByMLSId: DataLoader<number, number>;
 }
 
@@ -49,7 +49,7 @@ export const getDataLoaders = (mongoModels: MongoModels): IAPIDataLoaders => {
     queryListings: new DataLoader(async (filters) => {
       return await batchedForLoop(filters, async (filter) => {
         const listings = await retsClient.queryProperties({
-          city: filter.city ? [filter.city] : undefined,
+          cities: filter.cities ?? undefined,
         });
         return listings;
       });

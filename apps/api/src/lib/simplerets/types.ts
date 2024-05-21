@@ -4,7 +4,7 @@
  * @see https://docs.simplyrets.com/api/index.html#/Listings/get_properties
  */
 export type QueryPropertiesParams = {
-  city?: string[];
+  cities?: string[];
   q?: string[];
 };
 

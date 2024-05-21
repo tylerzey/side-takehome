@@ -27,21 +27,20 @@ describe('SimplyRETSClient', () => {
 
   describe('queryProperties', () => {
     it('should make a GET request to the properties endpoint with the provided params', async () => {
-      const params = { city: ['New York'] };
+      const params = { cities: ['New York'] };
       const response = { data: [{ id: 1, city: 'New York' }] };
       (axios.get as any).mockResolvedValueOnce(response);
 
       const result = await client.queryProperties(fromPartial(params));
 
-      expect(axios.get).toHaveBeenCalledWith(`${client.apiUrl}/properties`, {
-        params,
+      expect(axios.get).toHaveBeenCalledWith(`${client.apiUrl}/properties?cities=New%20York`, {
         auth: { username: client.username, password: client.password },
       });
       expect(result).toEqual(response.data);
     });
 
     it('should throw an error if the request fails', async () => {
-      const params = { city: ['New York'] };
+      const params = { cities: ['New York'] };
       const error = new Error('Request failed');
       (axios.get as any).mockRejectedValueOnce(error);
 

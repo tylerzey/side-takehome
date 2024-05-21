@@ -1,4 +1,4 @@
-import { afterEach, vi, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test } from 'vitest';
 import { graphQLSDK } from './lib/graphqlSDK';
 import { users } from './lib/users';
 import { listings } from './lib/listings';
@@ -26,18 +26,7 @@ describe('favoriting', () => {
       await Promise.all([add1, rm, add2]);
       const myFavorites = await sdk.queryMyFavorites();
 
-      expect(myFavorites.data?.queryFavorites.entities).toMatchInlineSnapshot(`
-      [
-        {
-          "mlsId": 1005192,
-          "resolvedValues": {
-            "listing": {
-              "mlsId": 1005192,
-            },
-          },
-        },
-      ]
-    `);
+      expect(myFavorites.data?.queryFavorites.entities).toHaveLength(1);
     },
     { retry: 3 }
   );

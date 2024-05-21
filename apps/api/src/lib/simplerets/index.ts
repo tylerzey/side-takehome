@@ -3,6 +3,7 @@ import axios, { isAxiosError } from 'axios';
 import { GetPropertyParams, QueryPropertiesParams } from './types';
 import axiosRetry from 'axios-retry';
 import { schemas } from './openapiZodClient';
+import { stringify } from 'qs';
 
 /**
  * We should only retry 429 and 500 errors as they are the only ones that are likely to be caused by rate limits or flakiness.
@@ -42,10 +43,12 @@ export class SimplyRETSClient {
 
   async queryProperties(params: QueryPropertiesParams) {
     try {
-      const response = await axios.get(`${this.apiUrl}/properties`, {
-        params,
-        auth: { username: this.username, password: this.password },
-      });
+      const response = await axios.get(
+        `${this.apiUrl}/properties?${stringify(params, { arrayFormat: 'repeat' })}`,
+        {
+          auth: { username: this.username, password: this.password },
+        }
+      );
       return schemas.Listing.array().parse(response.data);
     } catch (error) {
       console.error('Error fetching properties:', error);
