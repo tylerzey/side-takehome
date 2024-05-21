@@ -54,5 +54,3 @@ There are several quality checks enabled to ensure reliability:
 - Renovate is configured to update dependencies regularly.
 - GitHub Actions are configured to run lint, type-check, and tests against open pull requests before they are merged.
 - A security check is run against installed dependencies for all pull requests to ensure we are not shipping dependencies with known vulnerabilities.
-
-Please proofread this.

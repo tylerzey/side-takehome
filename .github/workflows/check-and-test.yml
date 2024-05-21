@@ -46,7 +46,7 @@ jobs:
         run: yarn security-check
 
       - name: 🧳 Check Build
-        run: yarn Build
+        run: yarn build
 
   test:
     runs-on: ubuntu-latest

@@ -14,7 +14,7 @@ export const listingTypeDefs = /* GraphQL */ `
 
   input QueryListingFilter {
     # Improve: Add filtering by StringFilter so we can do {eq: "foo"} and {neq: "foo"} etc
-    city: String
+    cities: [String!]
   }
 
   union ListingResponse = Listing | ErrorCause

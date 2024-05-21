@@ -24,6 +24,16 @@ describe('listings graphql', async () => {
     expect(res.data?.findListingById?.listPrice).toEqual(9375751);
     expect(res.data?.findListingById?.listDate).toEqual('1994-10-25T13:58:17.284009Z');
   });
+
+  test('Querying listings by city', async () => {
+    const sdk = graphQLSDK(users.user1);
+    const city = 'San Francisco';
+    const response = await sdk.queryListings({ cities: [city] });
+
+    expect(
+      response.data?.queryListings?.entities?.every((listing) => listing?.address?.city === city)
+    ).toBe(true);
+  });
 });
 
 /* GraphQL */ `
@@ -84,6 +94,18 @@ describe('listings graphql', async () => {
               cell
             }
           }
+        }
+      }
+    }
+  }
+`;
+/* GraphQL */ `
+  query queryListings($cities: [String!]!) {
+    queryListings(filter: {cities: $cities }) {
+      entities {
+        mlsId
+        address {
+          city
         }
       }
     }
