@@ -27,7 +27,7 @@ To run the API locally, you will need to:
 - `packages/scripts`: This is a place to put simple scripts that get consumed by more than one app or package.
 - `packages/tsconfig`: A shared place to put our tsconfig base file.
 - `packages/types`: This is a place to put utility types that are reused.
-- `packages/utils`: This is a place to put utility functions that are *non-runtime* specific. Avoid putting utilities specific to Node or the browser in here.
+- `packages/utils`: This is a place to put utility functions that are _non-runtime_ specific. Avoid putting utilities specific to Node or the browser in here.
 
 ## API Architecture
 
