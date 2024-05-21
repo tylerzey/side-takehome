@@ -68,7 +68,10 @@ export const getDataLoaders = (mongoModels: MongoModels): IAPIDataLoaders => {
       return ids.map((id) => favorites.find((f) => f._id === id) ?? null);
     }),
     countFavoritesByMLSId: new DataLoader(async (ids) => {
-      const favorites = await mongoModels.favoriteModel.find({ mlsId: { $in: ids } });
+      const favorites = await mongoModels.favoriteModel.find({
+        isFavorite: { $eq: true },
+        mlsId: { $in: ids },
+      });
 
       return ids.map((id) => favorites.filter((f) => f.mlsId === id).length);
     }),
