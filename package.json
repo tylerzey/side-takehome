@@ -55,7 +55,7 @@
     "dotenv": "16.3.1",
     "eslint": "9.3.0",
     "prettier": "3.1.1",
-    "sort-package-json": "2.6.0",
+    "sort-package-json": "2.10.0",
     "standard-monorepo": "0.9.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.5",
