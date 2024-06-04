@@ -1,6 +1,11 @@
 export const rootSchemaTypeDef = /* GraphQL */ `
   scalar Timezone
 
+  input QueryArgs {
+    limit: Int
+    offset: Int
+  }
+
   input StringFilter {
     exists: Boolean
     eq: String

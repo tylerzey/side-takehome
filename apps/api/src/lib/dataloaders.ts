@@ -1,17 +1,20 @@
 import { UserDB } from '@api/entities/users/userModel';
 import DataLoader from 'dataloader';
 import { MongoModels } from './mongo/mongoModels';
-import { Listing } from '@api/generated/resolvers';
+import { Listing, QueryArgs } from '@api/generated/resolvers';
 import { FavoriteDB } from '@api/entities/favorites/favoriteModel';
 import { SimplyRETSClient } from './simplerets';
 import { batchedForLoop } from '@side/utils/src/lang/batchedForLoop';
-
+import type { Maybe } from '@side/types/src';
 export interface IAPIDataLoaders {
   findUserByEmail: DataLoader<string, UserDB | null>;
   findListingById: DataLoader<number, Listing | null>;
   queryFavoritesByUserEmail: DataLoader<string, FavoriteDB[]>;
   findFavoriteById: DataLoader<string, FavoriteDB | null>;
-  queryListings: DataLoader<{ cities: null | string[] | undefined }, Listing[]>;
+  queryListings: DataLoader<
+    { query: Maybe<QueryArgs>; cities: null | string[] | undefined },
+    Listing[]
+  >;
   countFavoritesByMLSId: DataLoader<number, number>;
 }
 
@@ -50,6 +53,8 @@ export const getDataLoaders = (mongoModels: MongoModels): IAPIDataLoaders => {
       return await batchedForLoop(filters, async (filter) => {
         const listings = await retsClient.queryProperties({
           cities: filter.cities ?? undefined,
+          limit: filter.query?.limit ?? undefined,
+          offset: filter.query?.offset ?? undefined,
         });
         return listings;
       });

@@ -4,7 +4,7 @@ export const listingTypeDefs = /* GraphQL */ `
     Query listings based on a filter
     Improve: add query: QueryArgs in to support pagination
     """
-    queryListings(filter: QueryListingFilter): QueryListingResponse
+    queryListings(query: QueryArgs, filter: QueryListingFilter): QueryListingResponse
     """
     Find a listing by its mlsId.
     Returns an ErrorCause if the listing is not found or an error occurs.

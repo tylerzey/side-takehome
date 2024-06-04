@@ -43,6 +43,7 @@ export class SimplyRETSClient {
 
   async queryProperties(params: QueryPropertiesParams) {
     try {
+      // NOTE: If you're offset is too high, you will receive an HTTP 400 offset too high error message.
       const response = await axios.get(
         `${this.apiUrl}/properties?${stringify(params, { arrayFormat: 'repeat' })}`,
         {

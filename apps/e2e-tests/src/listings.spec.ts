@@ -34,6 +34,18 @@ describe('listings graphql', async () => {
       response.data?.queryListings?.entities?.every((listing) => listing?.address?.city === city)
     ).toBe(true);
   });
+
+  test('Limit and offset', async () => {
+    const sdk = graphQLSDK(users.user1);
+    const response = await sdk.queryListingsWithOffset({ query: { limit: 2, offset: 0 } });
+    const response2 = await sdk.queryListingsWithOffset({ query: { limit: 1, offset: 1 } });
+
+    expect(response.data?.queryListings?.entities?.[1]?.mlsId).toBe(
+      response2.data?.queryListings?.entities?.[0]?.mlsId
+    );
+    expect(response.data?.queryListings?.entities?.length).toBe(2);
+    expect(response2.data?.queryListings?.entities?.length).toBe(1);
+  });
 });
 
 /* GraphQL */ `
@@ -100,8 +112,20 @@ describe('listings graphql', async () => {
   }
 `;
 /* GraphQL */ `
-  query queryListings($cities: [String!]!) {
-    queryListings(filter: {cities: $cities }) {
+  query queryListings($query: QueryArgs,$cities: [String!]!) {
+    queryListings(query:$query,filter: {cities: $cities }) {
+      entities {
+        mlsId
+        address {
+          city
+        }
+      }
+    }
+  }
+`;
+/* GraphQL */ `
+  query queryListingsWithOffset($query: QueryArgs) {
+    queryListings(query:$query) {
       entities {
         mlsId
         address {

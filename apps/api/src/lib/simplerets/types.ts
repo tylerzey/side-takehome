@@ -5,6 +5,8 @@
  */
 export type QueryPropertiesParams = {
   cities?: string[];
+  limit?: number;
+  offset?: number;
   q?: string[];
 };
 
