@@ -15,7 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@graphql-tools/utils": "10.0.12",
+    "@graphql-tools/utils": "10.2.3",
     "@side/auth": "*",
     "@side/utils": "*",
     "apollo-server": "3.13.0",
